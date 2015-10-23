@@ -1,0 +1,103 @@
+*neoyank.txt*	Saves yank history includes unite.vim history/yank source.
+
+Version: 1.0
+Author : Shougo <Shougo.Matsu at gmail.com>
+License: MIT license  {{{
+    Permission is hereby granted, free of charge, to any person obtaining
+    a copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+    CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+    TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+    SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+}}}
+
+CONTENTS					*neoyank-contents*
+
+Usage			|neoyank-usage|
+Install			|neoyank-install|
+Configuration Examples	|neoyank-examples|
+Interface		|neoyank-interface|
+  Variables		  |neoyank-variables|
+  Sources		  |neoyank-sources|
+FAQ			|neoyank-faq|
+
+==============================================================================
+USAGE						*neoyank-usage*
+
+	To browse a history of yank registers.
+>
+	:Unite history/yank
+<
+==============================================================================
+INSTALL						*neoyank-install*
+
+Requirements: unite.vim
+
+https://github.com/Shougo/unite.vim
+
+==============================================================================
+INTERFACE					*neoyank-interface*
+
+------------------------------------------------------------------------------
+VARIABLES 					*neoyank-variables*
+
+						*g:neoyank#limit*
+g:neoyank#limit
+		The maximum number of |unite-source-history/yank| to save.
+
+					*g:unite_source_history_yank_limit*
+		Note: It is deprecated name.
+
+		The default value is 100.
+
+						*g:neoyank#file*
+g:neoyank#file
+		Specify the file to write the information of yank history.
+		If this variable is empty, saving history is disabled.
+
+					*g:unite_source_history_yank_file*
+		Note: It is deprecated name.
+
+		The default value is |g:unite_data_directory|; '/history_yank'
+		If you want to use another value than what's defined in
+		|g:unite_data_directory| you have to specify the full path.
+
+		Example:
+>
+		let g:neoyank#file = $HOME.'/.vim/yankring.txt'
+<
+						*g:neoyank#registers*
+g:neoyank#registers
+		Specify the save registers to yank history.
+
+					*g:unite_source_history_save_registers*
+		Note: It is deprecated name.
+
+		The default value is ['"'].
+
+------------------------------------------------------------------------------
+SOURCES						*neoyank-sources*
+
+						*unite-source-history/yank*
+history/yank	Nominates yanked words.
+		Note: Ignores yanked words which are too long.
+
+		Source arguments:
+		1. register names
+
+==============================================================================
+FAQ						*neoyank-faq*
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:
