@@ -38,7 +38,7 @@ let s:yank_histories_file_mtime = 0
 let s:prev_registers = {}
 
 let s:is_windows = has('win16') || has('win32') || has('win64') || has('win95')
-function! s:set_default(var, val, ...)  "{{{
+function! s:set_default(var, val, ...) abort  "{{{
   if !exists(a:var) || type({a:var}) != type(a:val)
     let alternate_var = get(a:000, 0, '')
     unlet! {a:var}
@@ -47,7 +47,7 @@ function! s:set_default(var, val, ...)  "{{{
           \ {alternate_var} : a:val
   endif
 endfunction"}}}
-function! s:substitute_path_separator(path) "{{{
+function! s:substitute_path_separator(path) abort "{{{
   return s:is_windows ? substitute(a:path, '\\', '/', 'g') : a:path
 endfunction"}}}
 let s:base = expand($XDG_CACHE_HOME != '' ?
@@ -68,7 +68,7 @@ call s:set_default(
       \ 'g:unite_source_history_yank_save_registers')
 "}}}
 
-function! neoyank#_append() "{{{
+function! neoyank#_append() abort "{{{
   let prev_histories = copy(s:yank_histories)
 
   for register in g:neoyank#save_registers
@@ -80,11 +80,11 @@ function! neoyank#_append() "{{{
     call neoyank#_save()
   endif
 endfunction"}}}
-function! neoyank#_get_yank_histories() "{{{
+function! neoyank#_get_yank_histories() abort "{{{
   return s:yank_histories
 endfunction"}}}
 
-function! neoyank#_save()  "{{{
+function! neoyank#_save() abort  "{{{
   if g:neoyank#file == ''
         \ || s:is_sudo()
         \ || s:yank_histories ==# s:yank_histories_old
@@ -99,7 +99,7 @@ function! neoyank#_save()  "{{{
         \ getftime(g:neoyank#file)
   let s:yank_histories_old = copy(s:yank_histories)
 endfunction"}}}
-function! neoyank#_load()  "{{{
+function! neoyank#_load() abort  "{{{
   if !filereadable(g:neoyank#file)
   \  || s:yank_histories_file_mtime ==
   \       getftime(g:neoyank#file)
@@ -133,7 +133,7 @@ function! neoyank#_load()  "{{{
         \ getftime(g:neoyank#file)
 endfunction"}}}
 
-function! s:add_register(name) "{{{
+function! s:add_register(name) abort "{{{
   " Append register value.
   if !has_key(s:yank_histories, a:name)
     let s:yank_histories[a:name] = []
@@ -158,7 +158,7 @@ function! s:add_register(name) "{{{
   call s:uniq(a:name)
 endfunction"}}}
 
-function! s:uniq(name) "{{{
+function! s:uniq(name) abort "{{{
   let history = s:uniq_by(s:yank_histories[a:name], 'v:val')
   if g:neoyank#limit < len(history)
     let history = history[ : g:neoyank#limit - 1]
@@ -166,7 +166,7 @@ function! s:uniq(name) "{{{
   let s:yank_histories[a:name] = history
 endfunction"}}}
 
-function! s:is_sudo() "{{{
+function! s:is_sudo() abort "{{{
   return $SUDO_USER != '' && $USER !=# $SUDO_USER
         \ && $HOME !=# expand('~'.$USER)
         \ && $HOME ==# expand('~'.$SUDO_USER)
@@ -189,7 +189,7 @@ function! s:uniq_by(list, f) abort
   return map(list, 'v:val[0]')
 endfunction
 
-function! s:writefile(path, list) "{{{
+function! s:writefile(path, list) abort "{{{
   let path = fnamemodify(a:path, ':p')
   if !isdirectory(fnamemodify(path, ':h'))
     call mkdir(fnamemodify(path, ':h'), 'p')

@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#history_yank#define() "{{{
+function! unite#sources#history_yank#define() abort "{{{
   return s:source
 endfunction"}}}
 
@@ -37,7 +37,7 @@ let s:source = {
       \ 'default_kind' : 'word',
       \}
 
-function! s:source.gather_candidates(args, context) "{{{
+function! s:source.gather_candidates(args, context) abort "{{{
   let registers = split(get(a:args, 0, '"'), '\zs')
 
   call neoyank#_load()
@@ -63,7 +63,7 @@ let s:source.action_table.delete = {
       \ 'is_quit' : 0,
       \ 'is_selectable' : 1,
       \ }
-function! s:source.action_table.delete.func(candidates) "{{{
+function! s:source.action_table.delete.func(candidates) abort "{{{
   for candidate in a:candidates
     call filter(neoyank#_get_yank_histories(),
           \ 'v:val[0] !=# candidate.word')
