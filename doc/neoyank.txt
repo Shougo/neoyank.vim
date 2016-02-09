@@ -77,8 +77,8 @@ g:neoyank#file
 >
 		let g:neoyank#file = $HOME.'/.vim/yankring.txt'
 <
-						*g:neoyank#registers*
-g:neoyank#registers
+						*g:neoyank#save_registers*
+g:neoyank#save_registers
 		Specify the save registers to yank history.
 
 					*g:unite_source_history_save_registers*
