@@ -86,6 +86,18 @@ g:neoyank#save_registers
 
 		The default value is ['"'].
 
+						*b:neoyank_disable_write*
+g:neoyank_disable_write
+		Set to some nonzero value to prohibit neoyank from saving to
+		the yank history. Intended to prevent leaks from encrypted
+		files to the unencrypted yank history.
+
+		Note: This variable is global. Local variables would not work
+		as the yank history is shared by all buffers.
+
+		Example:
+		autocmd BufWinEnter \(*.asc\|*.gpg\) let g:neoyank_disable = 1
+
 ------------------------------------------------------------------------------
 SOURCES						*neoyank-sources*
 
