@@ -32,13 +32,18 @@ set cpo&vim
 
 augroup neoyank
   autocmd!
-  autocmd WinEnter,BufWinEnter,CursorMoved,FocusGained,FocusLost *
-        \ silent call neoyank#_append()
 augroup END
 
-if v:version > 703 || v:version == 703 && has('patch867')
-  autocmd neoyank TextChanged * silent
-        \ call neoyank#_append()
+if exists('##TextYankPost') && exists('##TextDeletePost')
+  autocmd neoyank TextYankPost,TextDeletePost,FocusGained,FocusLost *
+        \ silent call neoyank#_append()
+else
+  autocmd neoyank WinEnter,BufWinEnter,CursorMoved,FocusGained,FocusLost *
+        \ silent call neoyank#_append()
+  if v:version > 703 || v:version == 703 && has('patch867')
+    autocmd neoyank TextChanged * silent
+          \ call neoyank#_append()
+  endif
 endif
 
 let g:loaded_neoyank = 1
