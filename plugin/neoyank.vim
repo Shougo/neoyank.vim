@@ -34,8 +34,8 @@ augroup neoyank
   autocmd!
 augroup END
 
-if exists('##TextYankPost') && exists('##TextDeletePost')
-  autocmd neoyank TextYankPost,TextDeletePost,FocusGained,FocusLost *
+if exists('##TextYankPost')
+  autocmd neoyank TextYankPost,FocusGained,FocusLost *
         \ silent call neoyank#_append()
 else
   autocmd neoyank WinEnter,BufWinEnter,CursorMoved,FocusGained,FocusLost *
