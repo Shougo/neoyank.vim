@@ -101,8 +101,7 @@ function! neoyank#_save() abort  "{{{
 endfunction"}}}
 function! neoyank#_load() abort  "{{{
   if !filereadable(g:neoyank#file)
-  \  || s:yank_histories_file_mtime ==
-  \       getftime(g:neoyank#file)
+        \ || s:yank_histories_file_mtime == getftime(g:neoyank#file)
     return
   endif
 
