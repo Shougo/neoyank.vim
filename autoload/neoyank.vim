@@ -27,7 +27,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Variables  "{{{
-let s:VERSION = '1.0'
+let s:VERSION = '2.0'
 
 let s:yank_histories = {}
 let s:yank_histories_old = {}
@@ -95,7 +95,7 @@ function! neoyank#_save() abort  "{{{
   call neoyank#_load()
 
   call s:writefile(g:neoyank#file,
-        \ [s:VERSION, string(s:yank_histories)])
+        \ [s:VERSION, s:vim2json(s:yank_histories)])
   let s:yank_histories_file_mtime =
         \ getftime(g:neoyank#file)
   let s:yank_histories_old = copy(s:yank_histories)
@@ -115,7 +115,7 @@ function! neoyank#_load() abort  "{{{
   endif
 
   try
-    sandbox let yank_histories = eval(file[1])
+    let yank_histories = s:json2vim(file[1])
   catch
     unlet! yank_histories
     let yank_histories = {}
@@ -198,6 +198,15 @@ function! s:writefile(path, list) abort "{{{
 
   call writefile(a:list, path)
 endfunction"}}}
+
+function! s:vim2json(expr) abort "{{{
+  return   (has('nvim') && exists('*json_encode')) ? json_encode(a:expr)
+        \ : has('patch-7.4.1498') ? js_encode(a:expr) : string(a:expr)
+endfunction "}}}
+function! s:json2vim(expr) abort "{{{
+  sandbox return (has('nvim') && exists('*json_encode') ? json_decode(a:expr)
+        \ : has('patch-7.4.1498') ? js_decode(a:expr) : eval(a:expr))
+endfunction "}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
