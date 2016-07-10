@@ -38,11 +38,12 @@ if exists('##TextYankPost')
   autocmd neoyank TextYankPost,FocusGained,FocusLost *
         \ silent call neoyank#_append()
 else
-  autocmd neoyank WinEnter,BufWinEnter,CursorMoved,FocusGained,FocusLost *
+  autocmd neoyank WinEnter,BufWinEnter,CursorMoved,BufWritePost,
+        \CursorHold,FocusGained,FocusLost,VimLeavePre *
         \ silent call neoyank#_append()
   if v:version > 703 || v:version == 703 && has('patch867')
-    autocmd neoyank TextChanged * silent
-          \ call neoyank#_append()
+    autocmd neoyank TextChanged *
+          \ silent call neoyank#_append()
   endif
 endif
 
