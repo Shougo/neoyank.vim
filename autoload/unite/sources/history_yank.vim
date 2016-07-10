@@ -40,7 +40,7 @@ let s:source = {
 function! s:source.gather_candidates(args, context) abort "{{{
   let registers = split(get(a:args, 0, '"'), '\zs')
 
-  call neoyank#_load()
+  call neoyank#update()
 
   let candidates = []
   for register in registers
@@ -69,7 +69,7 @@ function! s:source.action_table.delete.func(candidates) abort "{{{
           \ 'v:val[0] !=# candidate.word')
   endfor
 
-  call neoyank#_save()
+  call neoyank#update()
 endfunction"}}}
 "}}}
 

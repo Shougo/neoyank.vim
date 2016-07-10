@@ -29,6 +29,7 @@ Install			|neoyank-install|
 Configuration Examples	|neoyank-examples|
 Interface		|neoyank-interface|
   Variables		  |neoyank-variables|
+  Functions		  |neoyank-functions|
   Sources		  |neoyank-sources|
 FAQ			|neoyank-faq|
 
@@ -91,6 +92,13 @@ g:neoyank#disable_write
 
 		Example:
 		autocmd BufWinEnter \(*.asc\|*.gpg\) let g:neoyank_disable = 1
+
+------------------------------------------------------------------------------
+FUNCTIONS 					*neoyank-functions*
+
+						*neoyank#update()*
+neoyank#update()
+		Update neoyank cache file manually.
 
 ------------------------------------------------------------------------------
 SOURCES						*neoyank-sources*

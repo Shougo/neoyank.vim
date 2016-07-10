@@ -68,17 +68,18 @@ call s:set_default(
       \ 'g:unite_source_history_yank_save_registers')
 "}}}
 
+function! neoyank#update() abort "{{{
+  call neoyank#_append()
+endfunction"}}}
+
 function! neoyank#_append() abort "{{{
-  let prev_histories = copy(s:yank_histories)
+  call neoyank#_load()
 
   for register in g:neoyank#save_registers
     call s:add_register(register)
   endfor
 
-  if prev_histories !=# s:yank_histories
-    " Updated.
-    call neoyank#_save()
-  endif
+  call neoyank#_save()
 endfunction"}}}
 function! neoyank#_get_yank_histories() abort "{{{
   return s:yank_histories
@@ -87,12 +88,10 @@ endfunction"}}}
 function! neoyank#_save() abort  "{{{
   if g:neoyank#file == ''
         \ || s:is_sudo()
-        \ || s:yank_histories ==# s:yank_histories_old
         \ || (exists('g:neoyank#disable_write') && g:neoyank#disable_write)
+        \ || s:yank_histories ==# s:yank_histories_old
     return
   endif
-
-  call neoyank#_load()
 
   call s:writefile(g:neoyank#file,
         \ [s:VERSION, s:vim2json(s:yank_histories)])
