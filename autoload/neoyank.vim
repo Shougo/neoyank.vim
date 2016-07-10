@@ -88,7 +88,7 @@ function! neoyank#_save() abort  "{{{
   if g:neoyank#file == ''
         \ || s:is_sudo()
         \ || s:yank_histories ==# s:yank_histories_old
-        \ || (exists('g:neoyank_disable_write') && g:neoyank_disable_write)
+        \ || (exists('g:neoyank#disable_write') && g:neoyank#disable_write)
     return
   endif
 

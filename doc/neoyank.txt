@@ -86,8 +86,8 @@ g:neoyank#save_registers
 
 		The default value is ['"'].
 
-						*b:neoyank_disable_write*
-g:neoyank_disable_write
+						*g:neoyank#disable_write*
+g:neoyank#disable_write
 		Set to some nonzero value to prohibit neoyank from saving to
 		the yank history. Intended to prevent leaks from encrypted
 		files to the unencrypted yank history.
