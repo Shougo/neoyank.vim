@@ -56,8 +56,6 @@ VARIABLES 					*neoyank-variables*
 g:neoyank#limit
 		The maximum number of |unite-source-history/yank| to save.
 
-					*g:unite_source_history_yank_limit*
-		Note: It is deprecated name.
 
 		The default value is 100.
 
@@ -66,8 +64,6 @@ g:neoyank#file
 		Specify the file to write the information of yank history.
 		If this variable is empty, saving history is disabled.
 
-					*g:unite_source_history_yank_file*
-		Note: It is deprecated name.
 
 		The default value is |g:unite_data_directory|; '/history_yank'
 		If you want to use another value than what's defined in
@@ -81,8 +77,6 @@ g:neoyank#file
 g:neoyank#save_registers
 		Specify the save registers to yank history.
 
-					*g:unite_source_history_save_registers*
-		Note: It is deprecated name.
 
 		The default value is ['"'].
 
