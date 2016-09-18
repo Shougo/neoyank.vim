@@ -110,6 +110,9 @@ history/yank	Nominates yanked words.
 		Source arguments:
 		1. register names
 
+						*denite-source-neoyank*
+neoyank		Nominates yanked words.
+
 ==============================================================================
 FAQ						*neoyank-faq*
 
