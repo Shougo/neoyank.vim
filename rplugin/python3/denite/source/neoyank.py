@@ -22,7 +22,7 @@ class Source(Base):
         for [register, history] in self.vim.call(
                 'neoyank#_get_yank_histories').items():
             candidates += [{
-                'word': register + ': ' + re.sub(r'\n', r'\\n', x[0]),
+                'word': register + ': ' + re.sub(r'\n', r'\\n', x[0])[:200],
                 'action__text': x[0],
             } for x in history]
         return candidates
