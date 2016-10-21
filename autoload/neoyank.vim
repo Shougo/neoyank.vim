@@ -62,9 +62,19 @@ call s:set_default(
       \ 'g:neoyank#limit', 100,
       \ 'g:unite_source_history_yank_limit')
 
+function! s:default_register_from_clipboard()
+  if &clipboard == 'unnamed'
+    return ["*"]
+  elseif  &clipboard == 'unnamedplus'
+    return ["+"]
+  else
+    return ['"']
+  endif
+endfunction
+
 call s:set_default(
       \ 'g:neoyank#save_registers',
-      \ ['"'],
+      \ s:default_register_from_clipboard(),
       \ 'g:unite_source_history_yank_save_registers')
 "}}}
 
