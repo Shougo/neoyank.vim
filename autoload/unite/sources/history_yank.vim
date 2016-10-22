@@ -38,7 +38,7 @@ let s:source = {
       \}
 
 function! s:source.gather_candidates(args, context) abort "{{{
-  let registers = split(get(a:args, 0, '"'), '\zs')
+  let registers = split(get(a:args, 0, neoyank#default_register_from_clipboard()), '\zs')
 
   call neoyank#update()
 
