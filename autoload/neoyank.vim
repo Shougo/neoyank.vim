@@ -128,6 +128,10 @@ function! neoyank#_load() abort  "{{{
     unlet! yank_histories
     let yank_histories = {}
   endtry
+  if type(yank_histories) != type({})
+    unlet! yank_histories
+    let yank_histories = {}
+  endif
 
   for register in g:neoyank#save_registers
     if !has_key(s:yank_histories, register)
