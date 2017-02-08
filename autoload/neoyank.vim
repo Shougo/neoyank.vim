@@ -160,10 +160,17 @@ function! s:add_register(name) abort "{{{
 
   let len_history = len(reg[0])
   " Ignore too long yank.
-  if len_history < 2 || len_history > 100000
+  if len_history < 2 || len_history > 10000
         \ || reg[0] =~ '[\x00-\x08\x10-\x1a\x1c-\x1f]\{3,}'
     return
   endif
+
+  " Error check
+  try
+    call s:vim2json(reg)
+  catch
+    return
+  endtry
 
   let s:prev_registers[a:name] = reg
 
