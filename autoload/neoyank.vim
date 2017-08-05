@@ -197,12 +197,10 @@ function! s:writefile(path, list) abort "{{{
 endfunction"}}}
 
 function! s:vim2json(expr) abort "{{{
-  return   (has('nvim') && exists('*json_encode')) ? json_encode(a:expr)
-        \ : has('patch-7.4.1498') ? js_encode(a:expr) : string(a:expr)
+  return exists('*json_encode') ? json_encode(a:expr) : string(a:expr)
 endfunction "}}}
 function! s:json2vim(expr) abort "{{{
-  sandbox return (has('nvim') && exists('*json_encode') ? json_decode(a:expr)
-        \ : has('patch-7.4.1498') ? js_decode(a:expr) : eval(a:expr))
+  sandbox return (exists('*json_encode') ? json_decode(a:expr) : eval(a:expr))
 endfunction "}}}
 
 " vim: foldmethod=marker
