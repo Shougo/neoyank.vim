@@ -64,11 +64,21 @@ function! neoyank#_append() abort "{{{
   call neoyank#_load()
 
   for register in g:neoyank#save_registers
-    call s:add_register(register)
+    call s:add_register(register,
+          \ [getreg(register), getregtype(register)])
   endfor
 
   call neoyank#_save()
 endfunction"}}}
+function! neoyank#_yankpost() abort "{{{
+  if index(g:neoyank#save_registers, v:event.regname) < 0
+    return
+  endif
+
+  call s:add_register(v:event.regname,
+        \ [v:event.regcontents, v:event.regtype])
+endfunction"}}}
+
 function! neoyank#_get_yank_histories() abort "{{{
   return s:yank_histories
 endfunction"}}}
@@ -124,35 +134,34 @@ function! neoyank#_load() abort  "{{{
         \ getftime(g:neoyank#file)
 endfunction"}}}
 
-function! s:add_register(name) abort "{{{
+function! s:add_register(name, reg) abort "{{{
   " Append register value.
   if !has_key(s:yank_histories, a:name)
     let s:yank_histories[a:name] = []
   endif
 
-  let reg = [getreg(a:name), getregtype(a:name)]
-  if get(s:yank_histories[a:name], 0, []) ==# reg
+  if get(s:yank_histories[a:name], 0, []) ==# a:reg
     " Skip same register value.
     return
   endif
 
-  let len_history = len(reg[0])
+  let len_history = len(a:reg[0])
   " Ignore too long yank.
   if len_history < 2 || len_history > 10000
-        \ || reg[0] =~ '[\x00-\x08\x10-\x1a\x1c-\x1f]\{3,}'
+        \ || a:reg[0] =~ '[\x00-\x08\x10-\x1a\x1c-\x1f]\{3,}'
     return
   endif
 
   " Error check
   try
-    call s:vim2json(reg)
+    call s:vim2json(a:reg)
   catch
     return
   endtry
 
-  let s:prev_registers[a:name] = reg
+  let s:prev_registers[a:name] = a:reg
 
-  call insert(s:yank_histories[a:name], reg)
+  call insert(s:yank_histories[a:name], a:reg)
   call s:uniq(a:name)
 endfunction"}}}
 

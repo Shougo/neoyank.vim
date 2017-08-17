@@ -13,8 +13,10 @@ augroup neoyank
 augroup END
 
 if exists('##TextYankPost')
-  autocmd neoyank TextYankPost,FocusGained,FocusLost *
+  autocmd neoyank FocusGained,FocusLost,CursorHold *
         \ silent call neoyank#_append()
+  autocmd neoyank TextYankPost *
+        \ silent call neoyank#_yankpost()
 else
   autocmd neoyank WinEnter,BufWinEnter,CursorMoved,BufWritePost,
         \CursorHold,FocusGained,FocusLost,VimLeavePre *
