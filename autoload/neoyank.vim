@@ -76,7 +76,7 @@ function! neoyank#_yankpost() abort "{{{
   endif
 
   call s:add_register(v:event.regname,
-        \ [v:event.regcontents, v:event.regtype])
+        \ [join(v:event.regcontents, '\n'), v:event.regtype])
 endfunction"}}}
 
 function! neoyank#_get_yank_histories() abort "{{{
