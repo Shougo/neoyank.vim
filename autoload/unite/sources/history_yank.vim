@@ -4,9 +4,9 @@
 " License: MIT license
 "=============================================================================
 
-function! unite#sources#history_yank#define() abort "{{{
+function! unite#sources#history_yank#define() abort
   return s:source
-endfunction"}}}
+endfunction
 
 let s:source = {
       \ 'name' : 'history/yank',
@@ -15,7 +15,7 @@ let s:source = {
       \ 'default_kind' : 'word',
       \}
 
-function! s:source.gather_candidates(args, context) abort "{{{
+function! s:source.gather_candidates(args, context) abort
   let registers = split(get(a:args, 0, neoyank#default_register_from_clipboard()), '\zs')
 
   call neoyank#update()
@@ -32,23 +32,21 @@ function! s:source.gather_candidates(args, context) abort "{{{
   endfor
 
   return candidates
-endfunction"}}}
+endfunction
 
-" Actions "{{{
+" Actions
 let s:source.action_table.delete = {
       \ 'description' : 'delete from yank history',
       \ 'is_invalidate_cache' : 1,
       \ 'is_quit' : 0,
       \ 'is_selectable' : 1,
       \ }
-function! s:source.action_table.delete.func(candidates) abort "{{{
+function! s:source.action_table.delete.func(candidates) abort
   for candidate in a:candidates
     call filter(neoyank#_get_yank_histories(),
           \ 'v:val[0] !=# candidate.word')
   endfor
 
   call neoyank#update()
-endfunction"}}}
-"}}}
+endfunction
 
-" vim: foldmethod=marker
