@@ -16,7 +16,7 @@ let s:yank_histories_file_mtime = 0
 let s:prev_registers = {}
 
 let s:is_windows = has('win16') || has('win32') || has('win64') || has('win95')
-function! s:set_default(var, val, ...) abort 
+function! s:set_default(var, val, ...) abort
   if !exists(a:var) || type({a:var}) != type(a:val)
     let alternate_var = get(a:000, 0, '')
     unlet! {a:var}
@@ -83,7 +83,7 @@ function! neoyank#_get_yank_histories() abort
   return s:yank_histories
 endfunction
 
-function! neoyank#_save() abort 
+function! neoyank#_save() abort
   if g:neoyank#file == ''
         \ || s:is_sudo()
         \ || (exists('g:neoyank#disable_write') && g:neoyank#disable_write)
@@ -97,7 +97,7 @@ function! neoyank#_save() abort
         \ getftime(g:neoyank#file)
   let s:yank_histories_old = copy(s:yank_histories)
 endfunction
-function! neoyank#_load() abort 
+function! neoyank#_load() abort
   if !filereadable(g:neoyank#file)
         \ || s:yank_histories_file_mtime == getftime(g:neoyank#file)
     return
