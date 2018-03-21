@@ -25,7 +25,7 @@ function! s:source.gather_candidates(args, context) abort
     let candidates += map(copy(get(
           \ neoyank#_get_yank_histories(), register, [])), "{
           \   'word' : v:val[0],
-          \   'abbr' : printf('%-2d - %s', v:key, v:val[0]),
+          \   'abbr' : printf('%-2d - %s', v:key, substitute(v:val[0], '\n', '&     ', 'g')),
           \   'is_multiline' : 1,
           \   'action__regtype' : v:val[1],
           \   }")
