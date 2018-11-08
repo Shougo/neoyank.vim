@@ -75,8 +75,12 @@ function! neoyank#_yankpost() abort
     return
   endif
 
-  call s:add_register(v:event.regname,
-        \ [join(v:event.regcontents, '\n'), v:event.regtype])
+  let regcontents = join(v:event.regcontents, "\n")
+  if v:event.regtype ==# "V"
+      let regcontents .= "\n"
+  endif
+
+  call s:add_register(v:event.regname, [regcontents, v:event.regtype])
 endfunction
 
 function! neoyank#_get_yank_histories() abort
