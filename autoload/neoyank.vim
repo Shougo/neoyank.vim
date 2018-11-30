@@ -40,6 +40,10 @@ call s:set_default(
       \ 'g:neoyank#limit', 100,
       \ 'g:unite_source_history_yank_limit')
 
+call s:set_default(
+      \ 'g:neoyank#length', 10000,
+      \ 'g:unite_source_history_yank_length')
+
 function! neoyank#default_register_from_clipboard()
   if &clipboard == 'unnamed'
     return "*"
@@ -151,7 +155,7 @@ function! s:add_register(name, reg) abort
 
   let len_history = len(a:reg[0])
   " Ignore too long yank.
-  if len_history < 2 || len_history > 10000
+  if len_history < 2 || len_history > g:neoyank#length
         \ || a:reg[0] =~ '[\x00-\x08\x10-\x1a\x1c-\x1f]\{3,}'
     return
   endif
