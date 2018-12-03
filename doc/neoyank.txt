@@ -47,6 +47,13 @@ g:neoyank#limit
 
 		The default value is 100.
 
+						*g:neoyank#length*
+g:neoyank#length
+		The maximum length of register.
+
+
+		The default value is 10000.
+
 						*g:neoyank#file*
 g:neoyank#file
 		Specify the file to write the information of yank history.
