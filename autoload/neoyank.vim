@@ -69,16 +69,10 @@ function! neoyank#_append() abort
   call neoyank#_save()
 endfunction
 function! neoyank#_yankpost() abort
-  if index(g:neoyank#save_registers, v:event.regname) < 0
-    return
-  endif
-
-  let regcontents = join(v:event.regcontents, "\n")
-  if v:event.regtype ==# "V"
-      let regcontents .= "\n"
-  endif
-
-  call s:add_register(v:event.regname, [regcontents, v:event.regtype])
+  for register in g:neoyank#save_registers
+    call s:add_register(register,
+          \ [getreg(register), getregtype(register)])
+  endfor
 endfunction
 
 function! neoyank#_get_yank_histories() abort
