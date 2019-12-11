@@ -14,6 +14,7 @@ let s:yank_histories_old = {}
 let s:yank_histories_file_mtime = 0
 
 let s:prev_registers = {}
+let s:prev_yankpost_event = {}
 
 let s:is_windows = has('win16') || has('win32') || has('win64') || has('win95')
 function! s:set_default(var, val, ...) abort
@@ -69,10 +70,14 @@ function! neoyank#_append() abort
   call neoyank#_save()
 endfunction
 function! neoyank#_yankpost() abort
+  if v:event == s:prev_yankpost_event
+    return
+  endif
   for register in g:neoyank#save_registers
     call s:add_register(register,
           \ [getreg(register), getregtype(register)])
   endfor
+  let s:prev_yankpost_event = v:event
 endfunction
 
 function! neoyank#_get_yank_histories() abort
