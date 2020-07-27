@@ -29,8 +29,8 @@ endfunction
 function! s:substitute_path_separator(path) abort
   return s:is_windows ? substitute(a:path, '\\', '/', 'g') : a:path
 endfunction
-let s:base = expand($XDG_CACHE_HOME != '' ?
-        \   $XDG_CACHE_HOME . '/neoyank' : '~/.cache/neoyank')
+let s:base = expand(($XDG_CACHE_HOME != '' ?
+        \   $XDG_CACHE_HOME . '/neoyank' : '~/.cache/neoyank'), 1)
 
 call s:set_default(
       \ 'g:neoyank#file',
