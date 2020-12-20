@@ -15,7 +15,6 @@ class Source(Base):
 
         self.name = 'neoyank'
         self.kind = 'word'
-        self.default_action = 'append'
 
     def gather_candidates(self, context):
         self.vim.call('neoyank#update')
