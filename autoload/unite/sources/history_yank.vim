@@ -16,7 +16,8 @@ let s:source = {
       \}
 
 function! s:source.gather_candidates(args, context) abort
-  let registers = split(get(a:args, 0, neoyank#default_register_from_clipboard()), '\zs')
+  let registers = split(get(a:args, 0,
+        \ neoyank#default_register_from_clipboard()), '\zs')
 
   call neoyank#update()
 
@@ -25,7 +26,8 @@ function! s:source.gather_candidates(args, context) abort
     let candidates += map(copy(get(
           \ neoyank#_get_yank_histories(), register, [])), "{
           \   'word' : v:val[0],
-          \   'abbr' : printf('%-2d - %s', v:key, substitute(v:val[0], '\n', '&     ', 'g')),
+          \   'abbr' : printf('%-2d - %s', v:key,
+          \                   substitute(v:val[0], '\n', '&     ', 'g')),
           \   'is_multiline' : 1,
           \   'action__regtype' : v:val[1],
           \   }")
@@ -49,4 +51,3 @@ function! s:source.action_table.delete.func(candidates) abort
 
   call neoyank#update()
 endfunction
-

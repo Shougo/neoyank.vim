@@ -15,6 +15,7 @@ class Source(Base):
 
         self.name = 'neoyank'
         self.kind = 'word'
+        self.default_action = 'append'
 
     def gather_candidates(self, context):
         self.vim.call('neoyank#update')
@@ -24,5 +25,6 @@ class Source(Base):
             candidates += [{
                 'word': register + ': ' + re.sub(r'\n', r'\\n', x[0])[:200],
                 'action__text': x[0],
+                'action__regtype': x[1],
             } for x in history]
         return candidates
